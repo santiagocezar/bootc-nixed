@@ -1,0 +1,28 @@
+name: build
+
+on:
+  schedule:
+    - cron: '09 03 * * *'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout Push to Registry action
+      uses: actions/checkout@v3
+    - name: build
+      shell: bash
+      run: podman build . -t ghcr.io/santiagocezar/aurora-dx-nixed:latest
+    - name: login
+      shell: bash
+      run: podman login ghcr.io -u santiagocezar -p ${{ secrets.GITHUB_TOKEN }}
+    - name: push
+      shell: bash
+      run: podman push ghcr.io/santiagocezar/aurora-dx-nixed:latest
