@@ -6,6 +6,6 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     dnf5 copr enable -y scottames/ghostty && dnf5 install -y ghostty && \
-    dnf5 remove fw-fanctrl
+    dnf5 remove -y fw-fanctrl
 
 RUN bootc container lint
