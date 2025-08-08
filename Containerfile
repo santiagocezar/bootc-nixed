@@ -5,7 +5,13 @@ COPY 99-ds3-controllers.rules /etc/udev/rules.d/99-ds3-controllers.rules
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    dnf5 copr enable -y scottames/ghostty && dnf5 install -y ghostty && \
-    dnf5 remove -y fw-fanctrl
+    dnf5 copr enable -y scottames/ghostty && dnf5 install -y ghostty
+
+# fw-fanctrl: i don't have a framework laptop lol
+# input-remapper: seems to slow down paring by bt mouse
+RUN --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 remove -y fw-fanctrl input-remapper
 
 RUN bootc container lint
