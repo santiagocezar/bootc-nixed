@@ -17,6 +17,13 @@ jobs:
     steps:
     - name: Checkout Push to Registry action
       uses: actions/checkout@v3
+    - name: Maximize build space
+      id: container-storage-action
+      uses: ublue-os/container-storage-action@911baca08baf30c8654933e9e9723cb399892140
+      continue-on-error: true
+      with:
+        target-dir: /var/lib/containers
+        mount-opts: compress-force=zstd:2
     - name: build
       shell: bash
       run: podman build . -t ghcr.io/santiagocezar/aurora-dx-nixed:latest
